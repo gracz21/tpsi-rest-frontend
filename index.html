@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Grade Manager</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+	<script type="text/javascript" src="scripts/jquery-2.2.4.js"></script>
+	<script type="text/javascript" src="scripts/knockout-3.4.0.js"></script>
+	<script type="text/javascript" src="scripts/knockout.mapping-latest.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+  </head>
+
+  <body>
+	<header>
+		<img src="images/student.png" alt="logo"/>
+		<h1>Student Grade Manager</h1>
+	</header>
+
+		<div class="container">
+			<nav>
+			  <ul>
+				<li>
+				  <a href="#students">Manage students</a>
+				</li>
+				<li>
+				  <a href="#courses">Manage courses</a>
+				</li>
+			  </ul>
+			</nav>
+
+			<section id="students">
+			  <h2>List of students</h2>
+        <div style="overflow-x:auto;">
+  			  <table>
+  				<tr>
+  				  <th>
+  					<span>Index</span>
+            <i class="fa fa-search" aria-hidden="true">
+              <input placeholder="Search..." type="number" step="1" min="0" max="999999" />
+            </i>
+  				  </th>
+  				  <th>
+  					First name
+            <i class="fa fa-search" aria-hidden="true">
+              <input placeholder="Search..." type="text" />
+            </i>
+  				  </th>
+  				  <th>
+  					Last name
+            <i class="fa fa-search" aria-hidden="true">
+              <input placeholder="Search..." type="text" />
+            </i>
+  				  </th>
+  				  <th>
+  					Date of birth
+            <i class="fa fa-search" aria-hidden="true">
+  					  <input type="date" min="1950-01-01" max="2016-05-20" />
+            </i>
+  				  </th>
+  				  <th>Actions</th>
+  				</tr>
+  				<tr>
+  				  <td><input placeholder="Index" type="number" value="109714" readonly
+  					step="1" min="0" max="999999" required/></td>
+  				  <td><input placeholder="First name" type="text" value="Kamil" required/></td>
+  				  <td><input placeholder="Last name" type="text" value="Walkowiak" required/></td>
+  				  <td><input type="date" value="1993-03-24"
+  					min="1950-01-01" max="2016-05-20" required/></td>
+  				  <td>
+  					<a href="#grades">See grades</a>
+  					<a>Delete</a>
+  				  </td>
+  				</tr>
+  				<tr class="new">
+  				  <td><input placeholder="Index" type="number" readonly
+  					step="1" min="0" max="999999" required/></td>
+  				  <td><input placeholder="First name" type="text" required/></td>
+  				  <td><input placeholder="Last name" type="text" required/></td>
+  				  <td><input type="date"
+  					min="1950-01-01" max="2016-05-20" required/></td>
+  				  <td>
+  					<a>Save</a>
+  				  </td>
+  				</tr>
+  			  </table>
+        </div>
+			</section>
+
+			<section id="courses">
+			  <h2>List of courses</h2>
+        <div style="overflow-x:auto;">
+  			  <table>
+  				<tr>
+  				  <th>
+  					Name
+            <i class="fa fa-search" aria-hidden="true">
+              <input placeholder="Search..." type="text" />
+            </i>
+  				  </th>
+  				  <th>
+  					Leader
+            <i class="fa fa-search" aria-hidden="true">
+              <input placeholder="Search..." type="text" />
+            </i>
+  				  </th>
+  				  <th>Actions</th>
+  				</tr>
+  				<tr>
+  				  <td><input placeholder="Course name" type="text" value="TP-SI" required/></td>
+  				  <td><input placeholder="Leader" type="text" value="T. Pawlak" required/></td>
+  				  <td>
+              <a href="#grades">See grades</a>
+    					<a>Delete</a>
+  				  </td>
+  				</tr>
+  				<tr>
+  				  <td><input placeholder="Course name" type="text" value="PIT" required/></td>
+  				  <td><input placeholder="Leader" type="text" value="A. Jaszkiewicz" required/></td>
+  				  <td>
+              <a href="#grades">See grades</a>
+    					<a>Delete</a>
+  				  </td>
+  				</tr>
+  				<tr>
+  				  <td><input placeholder="Course name" type="text" required/></td>
+  				  <td><input placeholder="Leader" type="text" required/></td>
+  				  <td>
+  					<a>Save</a>
+  				  </td>
+  				</tr>
+  			  </table>
+        </div>
+			</section>
+
+			<section id="grades">
+			  <h2>List of grades</h2>
+        <div style="overflow-x:auto;">
+  			  <table>
+  				<tr>
+  				  <th>
+  					Course name
+            <i class="fa fa-search" aria-hidden="true">
+              <input placeholder="Search..." type="text" />
+            </i>
+  				  </th>
+  				  <th>
+  					Note
+            <i class="fa fa-search" aria-hidden="true">
+  					  <input placeholder="Search..." type="number" step="0.5" min="2.0" max="5.0"/>
+            </i>
+  				  </th>
+  				  <th>
+  					Date
+            <i class="fa fa-search" aria-hidden="true">
+  					  <input type="date" min="1950-01-01" max="2016-05-20" />
+            </i>
+  				  </th>
+  				  <th>Actions</th>
+  				</tr>
+  				<tr>
+  				  <td>
+  					<select required>
+  					  <option value="" disabled hidden>Choose subject...</option>
+  					  <option value="tp-si" selected>TP-SI</option>
+  					  <option value="pit">PIT</option>
+  					</select>
+  				  </td>
+  				  <td><input placeholder="Note" type="number" value="5.0" required
+  					 step="0.5" min="2.0" max="5.0"/></td>
+  				  <td><input type="date" value="2016-05-20"
+  					min="1950-01-01" max="2016-05-20" required/></td>
+  				  <td>
+  					<a>Delete</a>
+  				  </td>
+  				</tr>
+  				<tr>
+  				  <td>
+  					<select required>
+  					  <option value="" disabled selected hidden>Choose subject...</option>
+  					  <option value="tp-si">TP-SI</option>
+  					  <option value="pit">PIT</option>
+  					</select>
+  				  </td>
+  				  <td><input placeholder="Note" type="number" required
+  					 step="0.5" min="2.0" max="5.0"/></td>
+  				  <td><input type="date"
+  					min="1950-01-01" max="2016-05-20" required/></td>
+  				  <td>
+  					<a>Save</a>
+  				  </td>
+  				</tr>
+  			  </table>
+        </div>
+			</section>
+		</div>
+
+		<footer>
+		  <p>Created by: Kamil Walkowiak, 2016</p>
+		  <a href="http://www.put.poznan.pl/">Poznan University of Technology</a>
+		</footer>
+  </body>
+</html>
