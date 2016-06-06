@@ -12,15 +12,28 @@ var collection = function(url, idAttr) {
 			url: baseUrl,
 			dataType: "json",
 			success: function(data) {
-				data.forEach(function (element, index, array) {
+				data.forEach(function(element, index, array) {
 					var object = ko.mapping.fromJS(element);
+
 					self.push(object);
+
 					ko.computed(function() {
     				return ko.toJSON(object);
 					}).subscribe(function() {
-						self.update(object);
+						self.updateRequest(object);
 					});
 				});
+
+				self.subscribe(function(changes) {
+					changes.forEach(function(change) {
+						if(change.status == 'added') {
+							
+						}
+						if(change.status == 'deleted') {
+							self.deleteRequest(change.value);
+						}
+					});
+				}, null, "arrayChange");
 			}
 		});
 	}
@@ -35,7 +48,7 @@ var collection = function(url, idAttr) {
 		});
 	}
 
-	self.update = function(object) {
+	self.updateRequest = function(object) {
 		var updateUrl = baseUrl + "/" + object[idAttr]();
 		$.ajax({
 			url: updateUrl,
@@ -46,21 +59,17 @@ var collection = function(url, idAttr) {
 		});
 	}
 
-	self.delete = function() {
-		var _this = this;
-		var delUrl = baseUrl + "/" + this[idAttr]();
+	self.deleteRequest = function(object) {
+		var delUrl = baseUrl + "/" + object[idAttr]();
 		$.ajax({
 			url: delUrl,
-			method: "DELETE",
-			success: function(data) {
-				self.remove(_this);
-			}
+			method: "DELETE"
 		});
 	}
 
-	self.subscribe(function(newValue) {
-		alert("NEW");
-	});
+	self.delete = function() {
+		self.remove(this);
+	}
 
 	return self;
 }
@@ -69,7 +78,7 @@ function viewModel() {
 	this.students = new collection("students", "index");
 	this.students.get();
 	this.courses = new collection("courses", "courseId");
-	this.courses.get();
+	//this.courses.get();
 	this.grades = undefined;
 }
 
