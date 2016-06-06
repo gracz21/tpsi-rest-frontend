@@ -6,11 +6,14 @@ var collection = function(url) {
 	var self = ko.observableArray();
 
 	self.get = function() {
+		self.removeAll();
 		$.ajax({
 			url: backendAddress + url,
 			dataType: "json",
 			success: function(data) {
-				self = ko.mapping.fromJS(data);
+				data.forEach(function (element, index, array) {
+					self.push(ko.mapping.fromJS(element));
+				});
 			}
 		});
 	}
@@ -41,14 +44,17 @@ var collection = function(url) {
 	return self;
 }
 
-var viewModel = {
-	students: collection("students"),
-	courses: collection("courses"),
-	grades: undefined
+function viewModel() {
+	var self = this;
+
+	self.students = new collection("students");
+	self.students.get();
+	self.courses = new collection("courses");
+	self.courses.get();
+	self.grades = undefined;
 }
 
-viewModel.students.get();
-viewModel.courses.get();
-
 $(document).ready(function() {
+	var model = new viewModel();
+	ko.applyBindings(model);
 });

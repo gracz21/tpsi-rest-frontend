@@ -36,7 +36,7 @@
 			<section id="students">
 			  <h2>List of students</h2>
         <div style="overflow-x:auto;">
-  			  <table>
+  			<table>
   				<tr>
   				  <th>
   					<span>Index</span>
@@ -64,18 +64,18 @@
   				  </th>
   				  <th>Actions</th>
   				</tr>
-  				<tr>
-  				  <td><input placeholder="Index" type="number" value="109714" readonly
-  					step="1" min="0" max="999999" required/></td>
-  				  <td><input placeholder="First name" type="text" value="Kamil" required/></td>
-  				  <td><input placeholder="Last name" type="text" value="Walkowiak" required/></td>
-  				  <td><input type="date" value="1993-03-24"
-  					min="1950-01-01" max="2016-05-20" required/></td>
-  				  <td>
-  					<a href="#grades">See grades</a>
-  					<a>Delete</a>
-  				  </td>
-  				</tr>
+          <tbody data-bind="foreach: students">
+            <tr>
+    				  <td><input placeholder="Index" type="number" data-bind="value: index" readonly step="1" min="0" max="999999" required/></td>
+    				  <td><input placeholder="First name" type="text" data-bind="value: firstName()" required/></td>
+    				  <td><input placeholder="Last name" type="text" data-bind="value: lastName" required/></td>
+    				  <td><input type="date" data-bind="value: dateOfBirth" min="1950-01-01" max="2016-05-20" required/></td>
+    				  <td>
+    					<a href="#grades">See grades</a>
+    					<a>Delete</a>
+    				  </td>
+    				</tr>
+          </tbody>
   				<tr class="new">
   				  <td><input placeholder="Index" type="number" readonly
   					step="1" min="0" max="999999" required/></td>
