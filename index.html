@@ -72,7 +72,7 @@
     				  <td><input type="date" data-bind="value: dateOfBirth" min="1950-01-01" max="2016-05-20" required/></td>
     				  <td>
     					<a href="#grades">See grades</a>
-    					<a>Delete</a>
+    					<a data-bind="click: $parent.students.delete">Delete</a>
     				  </td>
     				</tr>
           </tbody>
