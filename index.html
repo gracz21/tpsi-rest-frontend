@@ -116,7 +116,7 @@
     				  <td><input placeholder="Leader" type="text" data-bind="value: leader" required/></td>
     				  <td>
                 <a href="#grades">See grades</a>
-      					<a>Delete</a>
+      					<a data-bind="click: $parent.courses.delete">Delete</a>
     				  </td>
     				</tr>
           </tbody>
