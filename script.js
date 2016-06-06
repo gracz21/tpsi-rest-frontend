@@ -4,11 +4,12 @@ var backendAddress = "http://localhost:8000/";
 
 var collection = function(url, idAttr) {
 	var self = ko.observableArray();
+	var baseUrl = backendAddress + url;
 
 	self.get = function() {
 		self.removeAll();
 		$.ajax({
-			url: backendAddress + url,
+			url: baseUrl,
 			dataType: "json",
 			success: function(data) {
 				data.forEach(function (element, index, array) {
@@ -20,23 +21,27 @@ var collection = function(url, idAttr) {
 
 	self.save = function() {
 		$.ajax({
-			url: backendAddress + url,
+			url: baseUrl,
 			contentType: "json",
 			method: "POST"
 		});
 	}
 
 	self.update = function() {
+		var _this = this;
+		var updateUrl = baseUrl + "/" + this[idAttr]();
 		$.ajax({
-			url: backendAddress + url,
-			contentType: "json",
+			url: updateUrl,
+			dataType: "json",
+			contentType: "application/json",
+			data: ko.mapping.toJSON(_this, { ignore: ["link"] }),
 			method: "PUT"
 		});
 	}
 
 	self.delete = function() {
 		var _this = this;
-		var delUrl = backendAddress + url + "/" + this[idAttr]();
+		var delUrl = baseUrl + "/" + this[idAttr]();
 		$.ajax({
 			url: delUrl,
 			method: "DELETE",

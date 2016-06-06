@@ -67,12 +67,13 @@
           <tbody data-bind="foreach: students">
             <tr>
     				  <td><input placeholder="Index" type="number" data-bind="value: index" readonly step="1" min="0" max="999999" required/></td>
-    				  <td><input placeholder="First name" type="text" data-bind="value: firstName()" required/></td>
+    				  <td><input placeholder="First name" type="text" data-bind="value: firstName" required/></td>
     				  <td><input placeholder="Last name" type="text" data-bind="value: lastName" required/></td>
     				  <td><input type="date" data-bind="value: dateOfBirth" min="1950-01-01" max="2016-05-20" required/></td>
     				  <td>
-    					<a href="#grades">See grades</a>
-    					<a data-bind="click: $parent.students.delete">Delete</a>
+      					<a href="#grades">See grades</a>
+                <a data-bind="click: $parent.students.update">Update</a>
+      					<a data-bind="click: $parent.students.delete">Delete</a>
     				  </td>
     				</tr>
           </tbody>
@@ -116,6 +117,7 @@
     				  <td><input placeholder="Leader" type="text" data-bind="value: leader" required/></td>
     				  <td>
                 <a href="#grades">See grades</a>
+                <a data-bind="click: $parent.courses.update">Update</a>
       					<a data-bind="click: $parent.courses.delete">Delete</a>
     				  </td>
     				</tr>
