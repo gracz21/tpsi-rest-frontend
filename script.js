@@ -36,9 +36,10 @@ var collection = function(url) {
 
 	self.delete = function() {
 		$.ajax({
-			url: backendAddress + url,
+			url: backendAddress + url + "/" + this.index(),
 			method: "DELETE"
 		});
+		self.remove(this);
 	}
 
 	return self;
