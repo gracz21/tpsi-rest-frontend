@@ -13,28 +13,35 @@ var collection = function(url, idAttr) {
 			dataType: "json",
 			success: function(data) {
 				data.forEach(function (element, index, array) {
-					self.push(ko.mapping.fromJS(element));
+					var object = ko.mapping.fromJS(element);
+					self.push(object);
+					ko.computed(function() {
+    				return ko.toJSON(object);
+					}).subscribe(function() {
+						self.update(object);
+					});
 				});
 			}
 		});
 	}
 
 	self.save = function() {
+		var _this = this;
 		$.ajax({
 			url: baseUrl,
-			contentType: "json",
+			contentType: "application/json",
+			data: ko.mapping.toJSON(_this),
 			method: "POST"
 		});
 	}
 
-	self.update = function() {
-		var _this = this;
-		var updateUrl = baseUrl + "/" + this[idAttr]();
+	self.update = function(object) {
+		var updateUrl = baseUrl + "/" + object[idAttr]();
 		$.ajax({
 			url: updateUrl,
 			dataType: "json",
 			contentType: "application/json",
-			data: ko.mapping.toJSON(_this, { ignore: ["link"] }),
+			data: ko.mapping.toJSON(object, { ignore: ["link"] }),
 			method: "PUT"
 		});
 	}
@@ -50,6 +57,10 @@ var collection = function(url, idAttr) {
 			}
 		});
 	}
+
+	self.subscribe(function(newValue) {
+		alert("NEW");
+	});
 
 	return self;
 }
