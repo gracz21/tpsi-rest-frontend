@@ -2,7 +2,7 @@
 
 var backendAddress = "http://localhost:8000/";
 
-var collection = function(url) {
+var collection = function(url, idAttr) {
 	var self = ko.observableArray();
 
 	self.get = function() {
@@ -35,24 +35,26 @@ var collection = function(url) {
 	}
 
 	self.delete = function() {
+		var _this = this;
+		var delUrl = backendAddress + url + "/" + this[idAttr]();
 		$.ajax({
-			url: backendAddress + url + "/" + this.index(),
-			method: "DELETE"
+			url: delUrl,
+			method: "DELETE",
+			success: function(data) {
+				self.remove(_this);
+			}
 		});
-		self.remove(this);
 	}
 
 	return self;
 }
 
 function viewModel() {
-	var self = this;
-
-	self.students = new collection("students");
-	self.students.get();
-	self.courses = new collection("courses");
-	self.courses.get();
-	self.grades = undefined;
+	this.students = new collection("students", "index");
+	this.students.get();
+	this.courses = new collection("courses", "courseId");
+	this.courses.get();
+	this.grades = undefined;
 }
 
 $(document).ready(function() {
