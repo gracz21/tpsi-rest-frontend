@@ -110,22 +110,16 @@
   				  </th>
   				  <th>Actions</th>
   				</tr>
-  				<tr>
-  				  <td><input placeholder="Course name" type="text" value="TP-SI" required/></td>
-  				  <td><input placeholder="Leader" type="text" value="T. Pawlak" required/></td>
-  				  <td>
-              <a href="#grades">See grades</a>
-    					<a>Delete</a>
-  				  </td>
-  				</tr>
-  				<tr>
-  				  <td><input placeholder="Course name" type="text" value="PIT" required/></td>
-  				  <td><input placeholder="Leader" type="text" value="A. Jaszkiewicz" required/></td>
-  				  <td>
-              <a href="#grades">See grades</a>
-    					<a>Delete</a>
-  				  </td>
-  				</tr>
+          <tbody data-bind="foreach: courses">
+    				<tr>
+    				  <td><input placeholder="Course name" type="text" data-bind="value: name" required/></td>
+    				  <td><input placeholder="Leader" type="text" data-bind="value: leader" required/></td>
+    				  <td>
+                <a href="#grades">See grades</a>
+      					<a>Delete</a>
+    				  </td>
+    				</tr>
+          </tbody>
   				<tr>
   				  <td><input placeholder="Course name" type="text" required/></td>
   				  <td><input placeholder="Leader" type="text" required/></td>
