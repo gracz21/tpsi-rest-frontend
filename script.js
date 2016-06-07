@@ -34,6 +34,10 @@ var collection = function(url, idAttr) {
 						}
 					});
 				}, null, "arrayChange");
+
+				$(".grades-button").click(function() {
+					window.location = "#grades";
+				});
 			}
 		});
 	}

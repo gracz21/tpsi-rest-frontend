@@ -110,7 +110,7 @@ td input {
   width: 95%;
 }
 
-td:last-child a {
+button {
   background-color: #FFC107;
   border: none;
   color: white;
@@ -119,10 +119,11 @@ td:last-child a {
   display: inline-block;
   font-size: 0.8em;
   cursor: default;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.19);
 }
 
-td:last-child a:hover {
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.19);
+button:hover {
+  background-color: #FFD107;
 }
 
 footer {

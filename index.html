@@ -72,8 +72,8 @@
         				  <td><input placeholder="Last name" type="text" data-bind="value: lastName" required/></td>
         				  <td><input type="date" data-bind="value: dateOfBirth" min="1950-01-01" max="2016-05-20" required/></td>
         				  <td>
-          					<a href="#grades">See grades</a>
-          					<a data-bind="click: $parent.students.delete">Delete</a>
+          					<button class="grades-button">See grades</button>
+          					<button data-bind="click: $parent.students.delete">Delete</button>
         				  </td>
         				</tr>
               <!-- /ko -->
@@ -116,8 +116,8 @@
         				  <td><input placeholder="Course name" type="text" data-bind="value: name" required/></td>
         				  <td><input placeholder="Leader" type="text" data-bind="value: leader" required/></td>
         				  <td>
-                    <a href="#grades">See grades</a>
-          					<a data-bind="click: $parent.courses.delete">Delete</a>
+                    <button class="grades-button">See grades</button>
+          					<button data-bind="click: $parent.courses.delete">Delete</button>
         				  </td>
         				</tr>
               <!-- /ko -->
