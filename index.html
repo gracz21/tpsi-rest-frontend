@@ -72,7 +72,7 @@
         				  <td><input placeholder="Last name" type="text" data-bind="value: lastName" required/></td>
         				  <td><input type="date" data-bind="value: dateOfBirth" min="1950-01-01" max="2016-05-20" required/></td>
         				  <td>
-          					<button class="grades-button">See grades</button>
+          					<button data-bind="click: $parent.students.getGrades">See grades</button>
           					<button data-bind="click: $parent.students.delete">Delete</button>
         				  </td>
         				</tr>
@@ -168,8 +168,8 @@
                     <option value="pit">PIT</option>
                   </select>
                 </td>
-                <td><input placeholder="Note" type="number" value="5.0" requiredstep="0.5" min="2.0" max="5.0"/></td>
-                <td><input type="date" value="2016-05-20" min="1950-01-01" max="2016-05-20" required/></td>
+                <td><input placeholder="Note" type="number" data-bind="value: note" requiredstep="0.5" min="2.0" max="5.0"/></td>
+                <td><input type="date" data-bind="value: date" min="1950-01-01" max="2016-05-20" required/></td>
                 <td><a>Delete</a></td>
               </tr>
             <!-- /ko -->

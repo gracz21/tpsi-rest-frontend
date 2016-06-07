@@ -120,6 +120,11 @@ function viewModel() {
 	var self = this;
 
 	self.students = new collection(backendAddress + "students", "index");
+	self.students.getGrades = function() {
+		window.location = "#grades";
+		self.grades.url = this.links["grades"];
+		self.grades.get();
+	}
 	self.students.get();
 
 	self.courses = new collection(backendAddress + "courses", "courseId");
@@ -136,5 +141,4 @@ var model = new viewModel();
 
 $(document).ready(function() {
 	ko.applyBindings(model);
-	debugger;
 });
