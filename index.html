@@ -144,6 +144,12 @@
               <input placeholder="Search..." type="text" />
             </i>
   				  </th>
+            <th>
+  					Student
+            <i class="fa fa-search" aria-hidden="true">
+              <input placeholder="Search..." type="text" />
+            </i>
+  				  </th>
   				  <th>
   					Note
             <i class="fa fa-search" aria-hidden="true">
@@ -162,28 +168,46 @@
             <!-- ko foreach: grades -->
               <tr>
                 <td>
-                  <select required>
-                    <option value="" disabled hidden>Choose subject...</option>
-                    <option value="tp-si" selected>TP-SI</option>
-                    <option value="pit">PIT</option>
-                  </select>
+                  <select required disabled data-bind="options: $parent.courses,
+                                                      optionsText: function(i) { return i.name(); },
+                                                      optionsValue: function(i) { return i.courseId(); },
+                                                      optionsCaption: 'Choose subject...',
+                                                      value: courseId"/>
+                </td>
+                <td>
+                  <select required disabled data-bind="options: $parent.students,
+                                                      optionsText: function(i) { return i.firstName() + ' ' + i.lastName(); },
+                                                      optionsValue: function(i) { return i.index(); },
+                                                      optionsCaption: 'Choose student...',
+                                                      value: student.index"/>
                 </td>
                 <td><input placeholder="Note" type="number" data-bind="value: note" requiredstep="0.5" min="2.0" max="5.0"/></td>
                 <td><input type="date" data-bind="value: date" min="1950-01-01" max="2016-05-20" required/></td>
-                <td><a>Delete</a></td>
+                <td><button data-bind="click: $parent.grades.delete">Delete</button></td>
               </tr>
             <!-- /ko -->
             <tr>
-    				  <td>
-      					<select required>
-      					  <option value="" disabled selected hidden>Choose subject...</option>
-      					  <option value="tp-si">TP-SI</option>
-      					  <option value="pit">PIT</option>
-      					</select>
-    				  </td>
-    				  <td><input placeholder="Note" type="number" required step="0.5" min="2.0" max="5.0"/></td>
-    				  <td><input type="date" min="1950-01-01" max="2016-05-20" required/></td>
-    				  <td><a>Save</a></td>
+              <form data-bind="submit: grades.add">
+      				  <td>
+                  <select name="courseId" required data-bind="options: model.courses,
+                                                      optionsText: function(i) { return i.name(); },
+                                                      optionsValue: function(i) { return i.courseId(); },
+                                                      optionsCaption: 'Choose subject...',
+                                                      value: model.grades.selectedCourse,
+                                                      enable: !model.grades.selectedCourse()"/>
+      				  </td>
+                <td>
+                  <select name="index" required data-bind="options: model.students,
+                                                      optionsText: function(i) { return i.firstName() + ' ' + i.lastName(); },
+                                                      optionsValue: function(i) { return i.index(); },
+                                                      optionsCaption: 'Choose student...',
+                                                      value: model.grades.selectedStudent,
+                                                      enable: !model.grades.selectedStudent()"/>
+                </td>
+      				  <td><input name="note" placeholder="Note" type="number" required step="0.5" min="2.0" max="5.0"/></td>
+      				  <td><input name="date" type="date" min="1950-01-01" max="2016-05-20" required/></td>
+      				  <td><button>Save</button></td>
+              </form>
     				</tr>
           </tbody>
   			  </table>

@@ -122,6 +122,8 @@ function viewModel() {
 	self.students = new collection(backendAddress + "students", "index");
 	self.students.getGrades = function() {
 		window.location = "#grades";
+		self.grades.selectedStudent(this.index());
+		self.grades.selectedCourse(null);
 		self.grades.url = this.links["grades"];
 		self.grades.get();
 	}
@@ -130,11 +132,16 @@ function viewModel() {
 	self.courses = new collection(backendAddress + "courses", "courseId");
 	self.courses.getGrades = function() {
 		window.location = "#grades";
+		self.grades.selectedStudent(null);
+		self.grades.selectedCourse(this.courseId());
 		self.grades.url = this.links["grades"];
 		self.grades.get();
 	}
 	self.courses.get();
+
 	self.grades = new collection(backendAddress + "grades", "id");
+	self.grades.selectedCourse = ko.observable();
+	self.grades.selectedStudent = ko.observable();
 }
 
 var model = new viewModel();
