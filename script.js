@@ -4,16 +4,29 @@ var backendAddress = "http://localhost:8000/";
 
 var collection = function(url, idAttr) {
 	var self = ko.observableArray();
-	var baseUrl = backendAddress + url;
+
+	self.url = url;
 
 	self.get = function() {
+		if(self.sub != undefined) {
+			self.sub.dispose();
+		}
 		self.removeAll();
 		$.ajax({
-			url: baseUrl,
+			url: self.url,
 			dataType: "json",
 			success: function(data) {
 				data.forEach(function(element, index, array) {
-					var object = ko.mapping.fromJS(element);
+					var object = ko.mapping.fromJS(element, { ignore: ["link"] });
+					object.links = [];
+
+					if($.isArray(element.link)) {
+						element.link.forEach(function(link) {
+							object.links[link.params.rel] = link.href;
+						});
+					} else {
+						object.links[element.link.params.rel] = element.link.href;
+					}
 
 					self.push(object);
 
@@ -24,7 +37,7 @@ var collection = function(url, idAttr) {
 					});
 				});
 
-				self.subscribe(function(changes) {
+				self.sub = self.subscribe(function(changes) {
 					changes.forEach(function(change) {
 						if(change.status == 'added') {
 							self.saveRequest(change.value);
@@ -34,17 +47,13 @@ var collection = function(url, idAttr) {
 						}
 					});
 				}, null, "arrayChange");
-
-				$(".grades-button").click(function() {
-					window.location = "#grades";
-				});
 			}
 		});
 	}
 
 	self.saveRequest = function(object) {
 		$.ajax({
-			url: baseUrl,
+			url: self.url,
 			dataType: "json",
 			contentType: "application/json",
 			data: ko.mapping.toJSON(object),
@@ -52,25 +61,39 @@ var collection = function(url, idAttr) {
 			success: function(data) {
 				var response = ko.mapping.fromJS(data);
 				object.index(response.index());
+
+				object.links = [];
+
+				if($.isArray(data.link)) {
+					data.link.forEach(function(link) {
+						object.links[link.params.rel] = link.href;
+					});
+				} else {
+					object.links[data.link.params.rel] = data.link.href;
+				}
+
+				ko.computed(function() {
+					return ko.toJSON(object);
+				}).subscribe(function() {
+					self.updateRequest(object);
+				});
 			}
 		});
 	}
 
 	self.updateRequest = function(object) {
-		var updateUrl = baseUrl + "/" + object[idAttr]();
 		$.ajax({
-			url: updateUrl,
+			url: object.links['self'],
 			dataType: "json",
 			contentType: "application/json",
-			data: ko.mapping.toJSON(object, { ignore: ["link"] }),
+			data: ko.mapping.toJSON(object, { ignore: ["links"] }),
 			method: "PUT"
 		});
 	}
 
 	self.deleteRequest = function(object) {
-		var delUrl = baseUrl + "/" + object[idAttr]();
 		$.ajax({
-			url: delUrl,
+			url: object.links['self'],
 			method: "DELETE"
 		});
 	}
@@ -94,14 +117,24 @@ var collection = function(url, idAttr) {
 }
 
 function viewModel() {
-	this.students = new collection("students", "index");
-	this.students.get();
-	this.courses = new collection("courses", "courseId");
-	this.courses.get();
-	this.grades = undefined;
+	var self = this;
+
+	self.students = new collection(backendAddress + "students", "index");
+	self.students.get();
+
+	self.courses = new collection(backendAddress + "courses", "courseId");
+	self.courses.getGrades = function() {
+		window.location = "#grades";
+		self.grades.url = this.links["grades"];
+		self.grades.get();
+	}
+	self.courses.get();
+	self.grades = new collection(backendAddress + "grades", "id");
 }
 
+var model = new viewModel();
+
 $(document).ready(function() {
-	var model = new viewModel();
 	ko.applyBindings(model);
+	debugger;
 });

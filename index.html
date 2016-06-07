@@ -116,7 +116,7 @@
         				  <td><input placeholder="Course name" type="text" data-bind="value: name" required/></td>
         				  <td><input placeholder="Leader" type="text" data-bind="value: leader" required/></td>
         				  <td>
-                    <button class="grades-button">See grades</button>
+                    <button data-bind="click: $parent.courses.getGrades">See grades</button>
           					<button data-bind="click: $parent.courses.delete">Delete</button>
         				  </td>
         				</tr>
@@ -158,38 +158,34 @@
   				  </th>
   				  <th>Actions</th>
   				</tr>
-  				<tr>
-  				  <td>
-  					<select required>
-  					  <option value="" disabled hidden>Choose subject...</option>
-  					  <option value="tp-si" selected>TP-SI</option>
-  					  <option value="pit">PIT</option>
-  					</select>
-  				  </td>
-  				  <td><input placeholder="Note" type="number" value="5.0" required
-  					 step="0.5" min="2.0" max="5.0"/></td>
-  				  <td><input type="date" value="2016-05-20"
-  					min="1950-01-01" max="2016-05-20" required/></td>
-  				  <td>
-  					<a>Delete</a>
-  				  </td>
-  				</tr>
-  				<tr>
-  				  <td>
-  					<select required>
-  					  <option value="" disabled selected hidden>Choose subject...</option>
-  					  <option value="tp-si">TP-SI</option>
-  					  <option value="pit">PIT</option>
-  					</select>
-  				  </td>
-  				  <td><input placeholder="Note" type="number" required
-  					 step="0.5" min="2.0" max="5.0"/></td>
-  				  <td><input type="date"
-  					min="1950-01-01" max="2016-05-20" required/></td>
-  				  <td>
-  					<a>Save</a>
-  				  </td>
-  				</tr>
+          <tbody>
+            <!-- ko foreach: grades -->
+              <tr>
+                <td>
+                  <select required>
+                    <option value="" disabled hidden>Choose subject...</option>
+                    <option value="tp-si" selected>TP-SI</option>
+                    <option value="pit">PIT</option>
+                  </select>
+                </td>
+                <td><input placeholder="Note" type="number" value="5.0" requiredstep="0.5" min="2.0" max="5.0"/></td>
+                <td><input type="date" value="2016-05-20" min="1950-01-01" max="2016-05-20" required/></td>
+                <td><a>Delete</a></td>
+              </tr>
+            <!-- /ko -->
+            <tr>
+    				  <td>
+      					<select required>
+      					  <option value="" disabled selected hidden>Choose subject...</option>
+      					  <option value="tp-si">TP-SI</option>
+      					  <option value="pit">PIT</option>
+      					</select>
+    				  </td>
+    				  <td><input placeholder="Note" type="number" required step="0.5" min="2.0" max="5.0"/></td>
+    				  <td><input type="date" min="1950-01-01" max="2016-05-20" required/></td>
+    				  <td><a>Save</a></td>
+    				</tr>
+          </tbody>
   			  </table>
         </div>
 			</section>
