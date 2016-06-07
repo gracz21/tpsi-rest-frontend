@@ -64,29 +64,29 @@
   				  </th>
   				  <th>Actions</th>
   				</tr>
-          <tbody data-bind="foreach: students">
-            <tr>
-    				  <td><input placeholder="Index" type="number" data-bind="value: index" readonly step="1" min="0" max="999999" required/></td>
-    				  <td><input placeholder="First name" type="text" data-bind="value: firstName" required/></td>
-    				  <td><input placeholder="Last name" type="text" data-bind="value: lastName" required/></td>
-    				  <td><input type="date" data-bind="value: dateOfBirth" min="1950-01-01" max="2016-05-20" required/></td>
-    				  <td>
-      					<a href="#grades">See grades</a>
-      					<a data-bind="click: $parent.students.delete">Delete</a>
-    				  </td>
-    				</tr>
-          </tbody>
-  				<tr class="new">
-  				  <td><input placeholder="Index" type="number" readonly
-  					step="1" min="0" max="999999" required/></td>
-  				  <td><input placeholder="First name" type="text" required/></td>
-  				  <td><input placeholder="Last name" type="text" required/></td>
-  				  <td><input type="date"
-  					min="1950-01-01" max="2016-05-20" required/></td>
-  				  <td>
-  					<a>Save</a>
-  				  </td>
-  				</tr>
+            <tbody>
+              <!-- ko foreach: students-->
+                <tr>
+        				  <td><input placeholder="Index" type="number" data-bind="value: index" readonly step="1" min="0" max="999999" required/></td>
+        				  <td><input placeholder="First name" type="text" data-bind="value: firstName" required/></td>
+        				  <td><input placeholder="Last name" type="text" data-bind="value: lastName" required/></td>
+        				  <td><input type="date" data-bind="value: dateOfBirth" min="1950-01-01" max="2016-05-20" required/></td>
+        				  <td>
+          					<a href="#grades">See grades</a>
+          					<a data-bind="click: $parent.students.delete">Delete</a>
+        				  </td>
+        				</tr>
+              <!-- /ko -->
+              <tr>
+                <form data-bind="submit: students.add">
+        				  <td><input name="index" placeholder="Index" type="number" readonly step="1" min="0" max="999999" required/></td>
+        				  <td><input name="firstName" placeholder="First name" type="text" required/></td>
+        				  <td><input name=lastName placeholder="Last name" type="text" required/></td>
+        				  <td><input name="dateOfBirth" type="date" min="1950-01-01" max="2016-05-20" required/></td>
+        				  <td><button type="submit">Save</button></td>
+                </form>
+      				</tr>
+            </tbody>
   			  </table>
         </div>
 			</section>
@@ -110,23 +110,25 @@
   				  </th>
   				  <th>Actions</th>
   				</tr>
-          <tbody data-bind="foreach: courses">
-    				<tr>
-    				  <td><input placeholder="Course name" type="text" data-bind="value: name" required/></td>
-    				  <td><input placeholder="Leader" type="text" data-bind="value: leader" required/></td>
-    				  <td>
-                <a href="#grades">See grades</a>
-      					<a data-bind="click: $parent.courses.delete">Delete</a>
-    				  </td>
-    				</tr>
-          </tbody>
-  				<tr>
-  				  <td><input placeholder="Course name" type="text" required/></td>
-  				  <td><input placeholder="Leader" type="text" required/></td>
-  				  <td>
-  					<a>Save</a>
-  				  </td>
-  				</tr>
+            <tbody>
+              <!-- ko foreach: courses -->
+        				<tr>
+        				  <td><input placeholder="Course name" type="text" data-bind="value: name" required/></td>
+        				  <td><input placeholder="Leader" type="text" data-bind="value: leader" required/></td>
+        				  <td>
+                    <a href="#grades">See grades</a>
+          					<a data-bind="click: $parent.courses.delete">Delete</a>
+        				  </td>
+        				</tr>
+              <!-- /ko -->
+              <tr>
+                <form data-bind="submit: courses.add">
+        				  <td><input name="name" placeholder="Course name" type="text" required/></td>
+        				  <td><input name="leader" placeholder="Leader" type="text" required/></td>
+                  <td><button type="submit">Save</button></td>
+                </form>
+      				</tr>
+            </tbody>
   			  </table>
         </div>
 			</section>

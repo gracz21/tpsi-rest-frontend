@@ -27,7 +27,7 @@ var collection = function(url, idAttr) {
 				self.subscribe(function(changes) {
 					changes.forEach(function(change) {
 						if(change.status == 'added') {
-							
+							self.saveRequest(change.value);
 						}
 						if(change.status == 'deleted') {
 							self.deleteRequest(change.value);
@@ -38,13 +38,17 @@ var collection = function(url, idAttr) {
 		});
 	}
 
-	self.save = function() {
-		var _this = this;
+	self.saveRequest = function(object) {
 		$.ajax({
 			url: baseUrl,
+			dataType: "json",
 			contentType: "application/json",
-			data: ko.mapping.toJSON(_this),
-			method: "POST"
+			data: ko.mapping.toJSON(object),
+			method: "POST",
+			success: function(data) {
+				var response = ko.mapping.fromJS(data);
+				object.index(response.index());
+			}
 		});
 	}
 
@@ -67,6 +71,17 @@ var collection = function(url, idAttr) {
 		});
 	}
 
+	self.add = function(form) {
+		var data = {};
+		$(form).serializeArray().map(function(x) {
+			data[x.name] = x.value;
+		});
+		self.push(ko.mapping.fromJS(data));
+		$(form).each(function() {
+			this.reset();
+		});
+	}
+
 	self.delete = function() {
 		self.remove(this);
 	}
@@ -78,7 +93,7 @@ function viewModel() {
 	this.students = new collection("students", "index");
 	this.students.get();
 	this.courses = new collection("courses", "courseId");
-	//this.courses.get();
+	this.courses.get();
 	this.grades = undefined;
 }
 
