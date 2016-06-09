@@ -6,6 +6,7 @@ var collection = function(url, idAttr) {
 	var self = ko.observableArray();
 
 	self.url = url;
+	self.postUrl = self.url;
 
 	self.get = function() {
 		if(self.sub != undefined) {
@@ -53,14 +54,14 @@ var collection = function(url, idAttr) {
 
 	self.saveRequest = function(object) {
 		$.ajax({
-			url: self.url,
+			url: self.postUrl,
 			dataType: "json",
 			contentType: "application/json",
 			data: ko.mapping.toJSON(object),
 			method: "POST",
 			success: function(data) {
 				var response = ko.mapping.fromJS(data);
-				object.index(response.index());
+				object[idAttr](response[idAttr]());
 
 				object.links = [];
 
@@ -103,6 +104,7 @@ var collection = function(url, idAttr) {
 		$(form).serializeArray().map(function(x) {
 			data[x.name] = x.value;
 		});
+		data[idAttr] = null;
 		self.push(ko.mapping.fromJS(data));
 		$(form).each(function() {
 			this.reset();
@@ -142,6 +144,24 @@ function viewModel() {
 	self.grades = new collection(backendAddress + "grades", "id");
 	self.grades.selectedCourse = ko.observable();
 	self.grades.selectedStudent = ko.observable();
+	self.grades.add = function(form) {
+		self.grades.postUrl = backendAddress + 'students/' + self.grades.selectedStudent() + '/courses/' + self.grades.selectedCourse() + '/grades';
+		var data = {};
+		$(form).serializeArray().map(function(x) {
+			data[x.name] = x.value;
+		});
+		data.courseId = self.grades.selectedCourse();
+		data.student = ko.utils.arrayFirst(self.students(), function(student) {
+    	if(student.index() === self.grades.selectedStudent()) {
+				return ko.mapping.toJS(student);
+			}
+		});
+		data.id = null;
+		self.grades.push(ko.mapping.fromJS(data));
+		$(form).each(function() {
+			this.reset();
+		});
+	}
 }
 
 var model = new viewModel();
