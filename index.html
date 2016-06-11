@@ -47,19 +47,19 @@
   				  <th>
   					First name
             <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." type="text" />
+              <input placeholder="Search..." data-bind="textInput: model.students.queryParams.firstNameQuery" type="text" />
             </i>
   				  </th>
   				  <th>
   					Last name
             <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." type="text" />
+              <input placeholder="Search..." data-bind="textInput: model.students.queryParams.lastNameQuery" type="text" />
             </i>
   				  </th>
   				  <th>
   					Date of birth
             <i class="fa fa-search" aria-hidden="true">
-  					  <input type="date" min="1950-01-01" max="2016-05-20" />
+  					  <input type="date" data-bind="textInput: model.students.queryParams.dateOfBirthQuery" min="1950-01-01" max="2016-05-20" />
             </i>
   				  </th>
   				  <th>Actions</th>
@@ -99,13 +99,13 @@
   				  <th>
   					Name
             <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." type="text" />
+              <input placeholder="Search..." data-bind="textInput: model.courses.queryParams.nameQuery" type="text" />
             </i>
   				  </th>
   				  <th>
   					Leader
             <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." type="text" />
+              <input placeholder="Search..." data-bind="textInput: model.courses.queryParams.leaderQuery" type="text" />
             </i>
   				  </th>
   				  <th>Actions</th>
@@ -181,28 +181,28 @@
                                                       optionsCaption: 'Choose student...',
                                                       value: student.index"/>
                 </td>
-                <td><input placeholder="Note" type="number" data-bind="value: note" requiredstep="0.5" min="2.0" max="5.0"/></td>
+                <td><input placeholder="Note" type="number" data-bind="value: note" required step="0.5" min="2.0" max="5.0"/></td>
                 <td><input type="date" data-bind="value: date" min="1950-01-01" max="2016-05-20" required/></td>
                 <td><button data-bind="click: $parent.grades.delete">Delete</button></td>
               </tr>
             <!-- /ko -->
             <tr>
               <form data-bind="submit: grades.add">
-      				  <td>
+				<td>
                   <select name="courseId" required data-bind="options: model.courses,
                                                       optionsText: function(i) { return i.name(); },
                                                       optionsValue: function(i) { return i.courseId(); },
                                                       optionsCaption: 'Choose subject...',
                                                       value: model.grades.selectedCourse,
-                                                      enable: !model.grades.selectedCourse()"/>
-      				  </td>
+                                                      enable: model.grades.isCourseEnable()"/>
+      			</td>
                 <td>
                   <select name="index" required data-bind="options: model.students,
                                                       optionsText: function(i) { return i.firstName() + ' ' + i.lastName(); },
                                                       optionsValue: function(i) { return i.index(); },
                                                       optionsCaption: 'Choose student...',
                                                       value: model.grades.selectedStudent,
-                                                      enable: !model.grades.selectedStudent()"/>
+                                                      enable: model.grades.isStudentEnable()"/>
                 </td>
       				  <td><input name="note" placeholder="Note" type="number" required step="0.5" min="2.0" max="5.0"/></td>
       				  <td><input name="date" type="date" min="1950-01-01" max="2016-05-20" required/></td>

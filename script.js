@@ -8,15 +8,20 @@ var collection = function(url, idAttr) {
 	self.url = url;
 	self.postUrl = self.url;
 
-	self.get = function() {
-		if(self.sub != undefined) {
-			self.sub.dispose();
+	self.get = function(query) {
+		var url = self.url;
+
+		if(query) {
+			url = url + query;
 		}
-		self.removeAll();
 		$.ajax({
-			url: self.url,
+			url: url,
 			dataType: "json",
 			success: function(data) {
+				if(self.sub) {
+					self.sub.dispose();
+				}
+				self.removeAll();
 				data.forEach(function(element, index, array) {
 					var object = ko.mapping.fromJS(element, { ignore: ["link"] });
 					object.links = [];
@@ -32,7 +37,7 @@ var collection = function(url, idAttr) {
 					self.push(object);
 
 					ko.computed(function() {
-    				return ko.toJSON(object);
+						return ko.toJSON(object);
 					}).subscribe(function() {
 						self.updateRequest(object);
 					});
@@ -40,10 +45,10 @@ var collection = function(url, idAttr) {
 
 				self.sub = self.subscribe(function(changes) {
 					changes.forEach(function(change) {
-						if(change.status == 'added') {
+						if(change.status === 'added') {
 							self.saveRequest(change.value);
 						}
-						if(change.status == 'deleted') {
+						if(change.status === 'deleted') {
 							self.deleteRequest(change.value);
 						}
 					});
@@ -115,6 +120,11 @@ var collection = function(url, idAttr) {
 		self.remove(this);
 	}
 
+	self.parseQuery = function() {
+		console.log($.param(ko.mapping.toJS(self.queryParams)));
+		self.get('?' + $.param(ko.mapping.toJS(self.queryParams)));
+	}
+
 	return self;
 }
 
@@ -126,9 +136,21 @@ function viewModel() {
 		window.location = "#grades";
 		self.grades.selectedStudent(this.index());
 		self.grades.selectedCourse(null);
+		self.grades.isCourseEnable(true);
+		self.grades.isStudentEnable(false);
 		self.grades.url = this.links["grades"];
 		self.grades.get();
 	}
+	self.students.queryParams = {
+		firstNameQuery: ko.observable(),
+		lastNameQuery: ko.observable(),
+		dateOfBirthQuery: ko.observable()
+	}
+	Object.keys(self.students.queryParams).forEach(function(key) {
+		self.students.queryParams[key].subscribe(function() {
+			self.students.parseQuery();
+		});
+	});
 	self.students.get();
 
 	self.courses = new collection(backendAddress + "courses", "courseId");
@@ -136,14 +158,28 @@ function viewModel() {
 		window.location = "#grades";
 		self.grades.selectedStudent(null);
 		self.grades.selectedCourse(this.courseId());
+		self.grades.isCourseEnable(false);
+		self.grades.isStudentEnable(true);
 		self.grades.url = this.links["grades"];
 		self.grades.get();
 	}
+	self.courses.queryParams = {
+		nameQuery: ko.observable(),
+		leaderQuery: ko.observable()
+	}
+	Object.keys(self.courses.queryParams).forEach(function(key) {
+		self.courses.queryParams[key].subscribe(function() {
+			self.courses.parseQuery();
+		});
+	});
 	self.courses.get();
 
 	self.grades = new collection(backendAddress + "grades", "id");
 	self.grades.selectedCourse = ko.observable();
 	self.grades.selectedStudent = ko.observable();
+	self.grades.isCourseEnable = ko.observable(true);
+	self.grades.isStudentEnable = ko.observable(true);
+
 	self.grades.add = function(form) {
 		self.grades.postUrl = backendAddress + 'students/' + self.grades.selectedStudent() + '/courses/' + self.grades.selectedCourse() + '/grades';
 		var data = {};
@@ -152,7 +188,7 @@ function viewModel() {
 		});
 		data.courseId = self.grades.selectedCourse();
 		data.student = ko.utils.arrayFirst(self.students(), function(student) {
-    	if(student.index() === self.grades.selectedStudent()) {
+			if(student.index() === self.grades.selectedStudent()) {
 				return ko.mapping.toJS(student);
 			}
 		});
