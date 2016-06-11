@@ -141,6 +141,7 @@ function viewModel() {
 		self.grades.get();
 	}
 	self.students.queryParams = {
+    indexQuery: ko.observable(),
 		firstNameQuery: ko.observable(),
 		lastNameQuery: ko.observable(),
 		dateOfBirthQuery: ko.observable()
