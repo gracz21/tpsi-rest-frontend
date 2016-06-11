@@ -121,7 +121,6 @@ var collection = function(url, idAttr) {
 	}
 
 	self.parseQuery = function() {
-		console.log($.param(ko.mapping.toJS(self.queryParams)));
 		self.get('?' + $.param(ko.mapping.toJS(self.queryParams)));
 	}
 
@@ -138,7 +137,7 @@ function viewModel() {
 		self.grades.selectedCourse(null);
 		self.grades.isCourseEnable(true);
 		self.grades.isStudentEnable(false);
-		self.grades.url = this.links["grades"];
+		self.grades.url = backendAddress + "students/" + this.index() + "/grades";
 		self.grades.get();
 	}
 	self.students.queryParams = {
@@ -160,7 +159,7 @@ function viewModel() {
 		self.grades.selectedCourse(this.courseId());
 		self.grades.isCourseEnable(false);
 		self.grades.isStudentEnable(true);
-		self.grades.url = this.links["grades"];
+		self.grades.url = backendAddress + "courses/" + this.courseId() + "/grades";
 		self.grades.get();
 	}
 	self.courses.queryParams = {
@@ -198,6 +197,15 @@ function viewModel() {
 			this.reset();
 		});
 	}
+  self.grades.queryParams = {
+    noteQuery: ko.observable(),
+    dateQuery: ko.observable()
+  }
+  Object.keys(self.grades.queryParams).forEach(function(key) {
+		self.grades.queryParams[key].subscribe(function() {
+			self.grades.parseQuery();
+		});
+	});
 }
 
 var model = new viewModel();

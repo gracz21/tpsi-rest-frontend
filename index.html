@@ -39,28 +39,28 @@
   			<table>
   				<tr>
   				  <th>
-  					<span>Index</span>
-            <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." type="number" step="1" min="0" max="999999" />
-            </i>
+    					Index
+              <i class="fa fa-search" aria-hidden="true">
+                <input placeholder="Search..." type="number" step="1" min="0" max="999999" />
+              </i>
   				  </th>
   				  <th>
-  					First name
-            <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." data-bind="textInput: model.students.queryParams.firstNameQuery" type="text" />
-            </i>
+    					First name
+              <i class="fa fa-search" aria-hidden="true">
+                <input placeholder="Search..." data-bind="textInput: model.students.queryParams.firstNameQuery" type="text" />
+              </i>
   				  </th>
   				  <th>
-  					Last name
-            <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." data-bind="textInput: model.students.queryParams.lastNameQuery" type="text" />
-            </i>
+    					Last name
+              <i class="fa fa-search" aria-hidden="true">
+                <input placeholder="Search..." data-bind="textInput: model.students.queryParams.lastNameQuery" type="text" />
+              </i>
   				  </th>
   				  <th>
-  					Date of birth
-            <i class="fa fa-search" aria-hidden="true">
-  					  <input type="date" data-bind="textInput: model.students.queryParams.dateOfBirthQuery" min="1950-01-01" max="2016-05-20" />
-            </i>
+    					Date of birth
+              <i class="fa fa-search" aria-hidden="true">
+    					  <input type="date" data-bind="textInput: model.students.queryParams.dateOfBirthQuery" min="1950-01-01" max="2016-05-20" />
+              </i>
   				  </th>
   				  <th>Actions</th>
   				</tr>
@@ -97,16 +97,16 @@
   			  <table>
   				<tr>
   				  <th>
-  					Name
-            <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." data-bind="textInput: model.courses.queryParams.nameQuery" type="text" />
-            </i>
+  					  Name
+              <i class="fa fa-search" aria-hidden="true">
+                <input placeholder="Search..." data-bind="textInput: model.courses.queryParams.nameQuery" type="text" />
+              </i>
   				  </th>
   				  <th>
-  					Leader
-            <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." data-bind="textInput: model.courses.queryParams.leaderQuery" type="text" />
-            </i>
+    					Leader
+              <i class="fa fa-search" aria-hidden="true">
+                <input placeholder="Search..." data-bind="textInput: model.courses.queryParams.leaderQuery" type="text" />
+              </i>
   				  </th>
   				  <th>Actions</th>
   				</tr>
@@ -139,28 +139,28 @@
   			  <table>
   				<tr>
   				  <th>
-  					Course name
-            <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." type="text" />
-            </i>
+    					Course name
+              <i class="fa fa-search" aria-hidden="true">
+                <input placeholder="Search..." type="text" />
+              </i>
   				  </th>
             <th>
-  					Student
-            <i class="fa fa-search" aria-hidden="true">
-              <input placeholder="Search..." type="text" />
-            </i>
+    					Student
+              <i class="fa fa-search" aria-hidden="true">
+                <input placeholder="Search..." type="text" />
+              </i>
   				  </th>
   				  <th>
-  					Note
-            <i class="fa fa-search" aria-hidden="true">
-  					  <input placeholder="Search..." type="number" step="0.5" min="2.0" max="5.0"/>
-            </i>
+    					Note
+              <i class="fa fa-search" aria-hidden="true">
+    					  <input placeholder="Search..." data-bind="textInput: model.grades.queryParams.noteQuery" type="number" step="0.5" min="2.0" max="5.0"/>
+              </i>
   				  </th>
   				  <th>
-  					Date
-            <i class="fa fa-search" aria-hidden="true">
-  					  <input type="date" min="1950-01-01" max="2016-05-20" />
-            </i>
+    					Date
+              <i class="fa fa-search" aria-hidden="true">
+    					  <input type="date" data-bind="textInput: model.grades.queryParams.dateQuery" min="1950-01-01" max="2016-05-20" />
+              </i>
   				  </th>
   				  <th>Actions</th>
   				</tr>
@@ -188,14 +188,14 @@
             <!-- /ko -->
             <tr>
               <form data-bind="submit: grades.add">
-				<td>
+				        <td>
                   <select name="courseId" required data-bind="options: model.courses,
                                                       optionsText: function(i) { return i.name(); },
                                                       optionsValue: function(i) { return i.courseId(); },
                                                       optionsCaption: 'Choose subject...',
                                                       value: model.grades.selectedCourse,
                                                       enable: model.grades.isCourseEnable()"/>
-      			</td>
+      			    </td>
                 <td>
                   <select name="index" required data-bind="options: model.students,
                                                       optionsText: function(i) { return i.firstName() + ' ' + i.lastName(); },
